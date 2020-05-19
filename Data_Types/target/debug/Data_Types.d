@@ -1,0 +1,1 @@
+/home/arpangreat/RustExs/Data_Types/target/debug/Data_Types: /home/arpangreat/RustExs/Data_Types/src/Arrays.rs /home/arpangreat/RustExs/Data_Types/src/DataTypes.rs /home/arpangreat/RustExs/Data_Types/src/String.rs /home/arpangreat/RustExs/Data_Types/src/Tuples.rs /home/arpangreat/RustExs/Data_Types/src/Vectors.rs /home/arpangreat/RustExs/Data_Types/src/main.rs
