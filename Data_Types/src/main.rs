@@ -1,7 +1,7 @@
+mod Arrays;
 mod DataTypes;
 mod String;
 mod Tuples;
-mod Arrays;
 mod Vectors;
 
 fn main() {
