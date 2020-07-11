@@ -1,3 +1,8 @@
+mod result_panic;
+mod vec_panic;
+
 fn main() {
-    println!("Hello, world!");
+    // panic!("Crash and Burn");
+    //.  vec_panic::run();
+    result_panic::run();
 }
