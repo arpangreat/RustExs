@@ -1,1 +1,1 @@
-/home/arpangreat/RustExs/MyDocTutorial/minigrep/target/debug/minigrep: /home/arpangreat/RustExs/MyDocTutorial/minigrep/src/lib.rs /home/arpangreat/RustExs/MyDocTutorial/minigrep/src/main.rs
+/data/data/com.termux/files/home/RustExs/MyDocTutorial/minigrep/target/debug/minigrep: /data/data/com.termux/files/home/RustExs/MyDocTutorial/minigrep/src/lib.rs /data/data/com.termux/files/home/RustExs/MyDocTutorial/minigrep/src/main.rs
