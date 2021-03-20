@@ -1,0 +1,3 @@
+make a gf	true
+make money	false
+make rust app	true
