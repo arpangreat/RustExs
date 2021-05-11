@@ -23,6 +23,8 @@ fn main() {
                 Err(why) => println!("An Error occured: {}", why),
             },
         }
+    } else if action == "list" {
+        todo.list();
     }
 }
 
@@ -66,5 +68,9 @@ impl Todo {
             Some(v) => Some(*v = false),
             None => None,
         }
+    }
+    fn list(self) {
+        let mut res = std::fs::read("db.txt");
+        println!("{}", format!("{:?}", res));
     }
 }
