@@ -70,7 +70,7 @@ impl Todo {
         }
     }
     fn list(self) {
-        let mut res = std::fs::read("db.txt");
+        let res = std::fs::read("db.txt");
         println!("{}", format!("{:?}", res));
     }
 }
