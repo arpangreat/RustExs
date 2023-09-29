@@ -1,0 +1,159 @@
+	.text
+	.file	"main.f657fee0e41a2ec3-cgu.0"
+	.p2align	4, 0x90                         # -- Begin function _ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E
+	.type	_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E,@function
+_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E: # @_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E
+	.cfi_startproc
+# %bb.0:                                # %start
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	callq	*%rdi
+	#APP
+	#NO_APP
+	popq	%rax
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end0:
+	.size	_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E, .Lfunc_end0-_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E
+	.cfi_endproc
+                                        # -- End function
+	.hidden	_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E # -- Begin function _ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E
+	.globl	_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E
+	.p2align	4, 0x90
+	.type	_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E,@function
+_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E: # @_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E
+	.cfi_startproc
+# %bb.0:                                # %start
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movl	%ecx, %r8d
+	movq	%rdx, %rcx
+	movq	%rsi, %rdx
+	movq	%rdi, (%rsp)
+	movq	%rsp, %rdi
+	movl	$.Lvtable.0, %esi
+	callq	*_ZN3std2rt19lang_start_internal17h2686d3c261ab96d7E@GOTPCREL(%rip)
+	popq	%rcx
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end1:
+	.size	_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E, .Lfunc_end1-_ZN3std2rt10lang_start17h1e5b1dae8ecdfbd4E
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function _ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE
+	.type	_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE,@function
+_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE: # @"_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE"
+	.cfi_startproc
+# %bb.0:                                # %start
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movq	(%rdi), %rdi
+	callq	_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E
+	xorl	%eax, %eax
+	popq	%rcx
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end2:
+	.size	_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE, .Lfunc_end2-_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function _ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E
+	.type	_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E,@function
+_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E: # @"_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E"
+	.cfi_startproc
+# %bb.0:                                # %start
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movq	(%rdi), %rdi
+	callq	_ZN3std10sys_common9backtrace28__rust_begin_short_backtrace17h0355a918e484c138E
+	xorl	%eax, %eax
+	popq	%rcx
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end3:
+	.size	_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E, .Lfunc_end3-_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function _ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE
+	.type	_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE,@function
+_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE: # @"_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE"
+	.cfi_startproc
+# %bb.0:                                # %start
+	retq
+.Lfunc_end4:
+	.size	_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE, .Lfunc_end4-_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE
+	.cfi_endproc
+                                        # -- End function
+	.p2align	4, 0x90                         # -- Begin function _ZN4main4main17h826b49218aaecea9E
+	.type	_ZN4main4main17h826b49218aaecea9E,@function
+_ZN4main4main17h826b49218aaecea9E:      # @_ZN4main4main17h826b49218aaecea9E
+	.cfi_startproc
+# %bb.0:                                # %start
+	subq	$56, %rsp
+	.cfi_def_cfa_offset 64
+	movq	$.Lalloc_004b71e11835e37789f0750656a25291, 8(%rsp)
+	movq	$1, 16(%rsp)
+	movq	$.Lalloc_513570631223a12912d85da2bec3b15a, 24(%rsp)
+	xorps	%xmm0, %xmm0
+	movups	%xmm0, 32(%rsp)
+	leaq	8(%rsp), %rdi
+	callq	*_ZN3std2io5stdio6_print17h29eeb04801384e10E@GOTPCREL(%rip)
+	addq	$56, %rsp
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end5:
+	.size	_ZN4main4main17h826b49218aaecea9E, .Lfunc_end5-_ZN4main4main17h826b49218aaecea9E
+	.cfi_endproc
+                                        # -- End function
+	.globl	main                            # -- Begin function main
+	.p2align	4, 0x90
+	.type	main,@function
+main:                                   # @main
+	.cfi_startproc
+# %bb.0:                                # %top
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 16
+	movq	%rsi, %rcx
+	movslq	%edi, %rdx
+	movq	$_ZN4main4main17h826b49218aaecea9E, (%rsp)
+	movq	%rsp, %rdi
+	movl	$.Lvtable.0, %esi
+	xorl	%r8d, %r8d
+	callq	*_ZN3std2rt19lang_start_internal17h2686d3c261ab96d7E@GOTPCREL(%rip)
+                                        # kill: def $eax killed $eax killed $rax
+	popq	%rcx
+	.cfi_def_cfa_offset 8
+	retq
+.Lfunc_end6:
+	.size	main, .Lfunc_end6-main
+	.cfi_endproc
+                                        # -- End function
+	.type	.Lvtable.0,@object              # @vtable.0
+	.section	.rodata,"a",@progbits
+	.p2align	3
+.Lvtable.0:
+	.quad	_ZN4core3ptr85drop_in_place$LT$std..rt..lang_start$LT$$LP$$RP$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h18b0b307a53ad12dE
+	.asciz	"\b\000\000\000\000\000\000\000\b\000\000\000\000\000\000"
+	.quad	_ZN4core3ops8function6FnOnce40call_once$u7b$$u7b$vtable.shim$u7d$$u7d$17h2461ee5be47e7903E
+	.quad	_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE
+	.quad	_ZN3std2rt10lang_start28_$u7b$$u7b$closure$u7d$$u7d$17h06019accf128c4fbE
+	.size	.Lvtable.0, 48
+
+	.type	.Lalloc_513570631223a12912d85da2bec3b15a,@object # @alloc_513570631223a12912d85da2bec3b15a
+	.p2align	3
+.Lalloc_513570631223a12912d85da2bec3b15a:
+	.size	.Lalloc_513570631223a12912d85da2bec3b15a, 0
+
+	.type	.Lalloc_3213114faf700a46436312d7d5d956d1,@object # @alloc_3213114faf700a46436312d7d5d956d1
+.Lalloc_3213114faf700a46436312d7d5d956d1:
+	.ascii	"Hello, world!\n"
+	.size	.Lalloc_3213114faf700a46436312d7d5d956d1, 14
+
+	.type	.Lalloc_004b71e11835e37789f0750656a25291,@object # @alloc_004b71e11835e37789f0750656a25291
+	.p2align	3
+.Lalloc_004b71e11835e37789f0750656a25291:
+	.quad	.Lalloc_3213114faf700a46436312d7d5d956d1
+	.asciz	"\016\000\000\000\000\000\000"
+	.size	.Lalloc_004b71e11835e37789f0750656a25291, 16
+
+	.section	".note.GNU-stack","",@progbits
