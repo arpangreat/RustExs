@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::io::Read;
+use std::io::{Error, Read};
 use std::str::FromStr;
 
 fn main() {
@@ -69,8 +69,18 @@ impl Todo {
             None => None,
         }
     }
+    // fn list(self) -> Result<(), std::io::Error> {
+    //     let res = match std::fs::read_to_string("db.txt") {
+    //         Ok(it) => it,
+    //         Err(err) => return Err(err),
+    //     };
+    //     // let res = std::io::read_to_string("db.txt");
+    //     println!("{:#?}", res);
+    //     Ok(())
+    // }
+
     fn list(self) {
-        let res = std::fs::read("db.txt");
-        println!("{}", format!("{:?}", res));
+        let res = std::fs::read_to_string("db.txt").expect("File not Found");
+        println!("{res}");
     }
 }
