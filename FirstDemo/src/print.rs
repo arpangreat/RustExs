@@ -26,4 +26,7 @@ pub fn run() {
 
     // Basic math
     println!("10 + 10 = {}", 10 + 10);
+    let x = 8;
+
+    println!("{}", std::mem::size_of_val(&x));
 }
