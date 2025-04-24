@@ -1,55 +1,128 @@
-struct Task {
-    description: String,
-    completed: bool,
-}
+use rusqlite::{Connection, Result};
+use std::io::Write;
 
 struct Todo {
-    tasks: Vec<Task>,
+    conn: Connection,
 }
 
 impl Todo {
-    fn new() -> Self {
-        Todo { tasks: Vec::new() }
+    fn new() -> Result<Self> {
+        let conn = Connection::open("task.db")?;
+
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS Todo (
+                id INTEGER PRIMARY KEY,
+                description TEXT NOT NULL,
+                completed BOOLEAN NOT NULL DEFAULT FALSE
+                )",
+            [],
+        )?;
+
+        Ok(Todo { conn })
     }
 
-    fn add_task(&mut self, description: String) {
-        let task = Task {
-            description,
-            completed: false,
+    fn add_task(&mut self, description: String) -> Result<()> {
+        self.conn.execute(
+            "
+            INSERT INTO Todo (description) VALUES (?1)
+            ",
+            [description],
+        )?;
+
+        println!("task added");
+
+        Ok(())
+    }
+
+    fn check_task(&mut self, id: usize) -> Result<()> {
+        let affected = self.conn.execute(
+            "
+            UPDATE Todo SET completed = 1 WHERE id = ?1
+            ",
+            [id],
+        )?;
+
+        if affected == 0 {
+            println!("No task of id: {} found", id);
+        } else {
+            println!("Task of id: {} completed", id);
         };
 
-        self.tasks.push(task);
+        Ok(())
     }
 
-    fn check_task(&mut self, task: usize) {
-        self.tasks.iter_mut().enumerate().for_each(|(i, tasks)| {
-            if i == task {
-                tasks.completed = true
-            }
-        });
-    }
+    fn list(&mut self) -> Result<()> {
+        let mut stmt = self
+            .conn
+            .prepare("SELECT id, description, completed FROM Todo")?;
 
-    fn list(&mut self) {
-        for (i, tasks) in self.tasks.iter().enumerate() {
-            // add code here
-            println!(
-                "{} [{}] {}",
-                i,
-                if tasks.completed { 'x' } else { ' ' },
-                tasks.description
-            )
+        let tasks = stmt.query_map([], |row| {
+            Ok((
+                row.get::<_, i32>(0)?,
+                row.get::<_, String>(1)?,
+                row.get::<_, bool>(2)?,
+            ))
+        })?;
+
+        for task in tasks {
+            let (id, description, completed) = task?;
+
+            println!("Todo: ");
+            println!("id: {:?}", id);
+            println!("description: {:?}", description);
+            println!("completed: {:?}", completed);
         }
+
+        Ok(())
     }
 }
 
-fn main() {
-    let mut todoapp = Todo::new();
+fn main() -> Result<()> {
+    let mut todoapp = Todo::new()?;
 
-    todoapp.add_task("create a project".to_string());
-    todoapp.add_task("create a repo".to_string());
+    let args: Vec<String> = std::env::args().collect();
 
-    todoapp.check_task(1);
+    if args.len() < 2 {
+        println!("Invalid run");
+    }
 
-    println!("Todo: ");
-    todoapp.list();
+    let action = &args[1];
+
+    match action.as_str() {
+        "add" => {
+            print!("Add a description for the Todo: ");
+            std::io::stdout().flush().unwrap();
+
+            let mut desc = String::new();
+
+            std::io::stdin()
+                .read_line(&mut desc)
+                .expect("Please write down your Todo description");
+
+            let desc = desc.trim().parse().expect("yo");
+
+            todoapp.add_task(desc)?;
+        }
+        "check" => {
+            print!("Which task do you wanna checked? ");
+            std::io::stdout().flush().unwrap();
+
+            let mut num = String::new();
+
+            std::io::stdin()
+                .read_line(&mut num)
+                .expect("Please type a valid number");
+
+            let num: usize = num.trim().parse().expect("Please type a number");
+
+            todoapp.check_task(num)?;
+        }
+        "list" => {
+            println!("Todo: ");
+            todoapp.list()?;
+        }
+        _ => println!("Tell us a valid command. Available actions are add, check, list"),
+    }
+
+    Ok(())
 }
