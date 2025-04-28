@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 // Crossterm backend imports
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 
@@ -12,13 +14,62 @@ use ratatui::{
     widgets::{Block, Paragraph, Table, Widget},
 };
 
-#[derive(Debug, Default)]
 pub struct App {
-    counter: u8,
-    exit: bool,
+    pub key_input: String,
+    pub value_input: bool,
+    pub pairs: HashMap<String, bool>,
+    pub current_screen: CurrentScreen,
+    pub currently_editing: Option<CurrentlyEditing>,
+}
+
+pub enum CurrentScreen {
+    Main,
+    Editing,
+    Exiting,
+}
+
+pub enum CurrentlyEditing {
+    Key,
+    Value,
 }
 
 impl App {
+    pub fn new() -> App {
+        App {
+            key_input: String::new(),
+            value_input: false,
+            pairs: HashMap::new(),
+            current_screen: CurrentScreen::Main,
+            currently_editing: None,
+        }
+    }
+
+    pub fn save_key_value(&mut self) {
+        self.pairs
+            .insert(self.key_input.clone(), self.value_input.clone());
+
+        self.key_input = String::new();
+        self.value_input = false;
+        self.currently_editing = None;
+    }
+
+    pub fn toggle_editing(&mut self) {
+        if let Some(edit_mode) = &self.currently_editing {
+            match edit_mode {
+                CurrentlyEditing::Key => self.currently_editing = Some(CurrentlyEditing::Value),
+                CurrentlyEditing::Value => self.currently_editing = Some(CurrentlyEditing::Key),
+            };
+        } else {
+            self.currently_editing = Some(CurrentlyEditing::Key);
+        }
+    }
+
+    pub fn print_pairs(&self) -> std::io::Result<()> {
+        let output = &self.pairs;
+        println!("{:?}", output);
+        Ok(())
+    }
+
     pub fn run(&mut self, terminal: &mut DefaultTerminal) -> std::io::Result<()> {
         while !self.exit {
             terminal.draw(|frame| self.draw(frame));
@@ -54,14 +105,6 @@ impl App {
 
     fn exit(&mut self) {
         self.exit = true;
-    }
-
-    fn up(&mut self) {
-        self.counter -= 1;
-    }
-
-    fn down(&mut self) {
-        self.counter += 1;
     }
 }
 
