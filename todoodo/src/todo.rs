@@ -1,7 +1,17 @@
 use rusqlite::Connection;
 
+use crate::app::App;
+
 pub struct Todo {
-    conn: Connection,
+    pub conn: Connection,
+    pub tasks: Vec<TodoItems>,
+    pub selected_tasks: Option<usize>,
+}
+
+pub struct TodoItems {
+    id: u16,
+    description: String,
+    completed: bool,
 }
 
 impl Todo {
@@ -19,16 +29,20 @@ impl Todo {
         )
         .expect("Error while evaluating the query");
 
-        Ok(Todo { conn })
+        Ok(Todo {
+            conn,
+            tasks: Vec::new(),
+            selected_tasks: None,
+        })
     }
 
-    pub fn add_task(&mut self, description: String) -> std::io::Result<()> {
+    pub fn add_task(&mut self, app: &App) -> std::io::Result<()> {
         self.conn
             .execute(
                 "
             INSERT INTO Todo (description) VALUES (?1)
             ",
-                [description],
+                [app.key_input.clone()],
             )
             .expect("Error on adding the task in database");
 
