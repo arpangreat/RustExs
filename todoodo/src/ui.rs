@@ -2,16 +2,15 @@ use std::vec;
 
 use ratatui::{
     Frame,
-    backend::Backend,
     layout::{Constraint, Layout},
-    style::{Color, Modifier, Style, Stylize, palette::material::RED},
-    text::{Line, Span, Text},
-    widgets::Paragraph,
+    style::{Color, Modifier, Style, Stylize},
+    text::{Line, Text},
+    widgets::{Block, Borders, Paragraph},
 };
 
 use crate::app::{App, CurrentScreen};
 
-pub fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
+pub fn ui(f: &mut Frame, app: &App) {
     let chunks = Layout::default()
         .direction(ratatui::layout::Direction::Vertical)
         .margin(2)
@@ -28,7 +27,7 @@ pub fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
             vec![
                 "Press: ".into(),
                 "e".bold(),
-                " to add or delete a Todo ".into(),
+                " to add or delete a Todo, ".into(),
                 "q".bold(),
                 " to quit ".into(),
             ],
@@ -38,7 +37,7 @@ pub fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
             vec![
                 "Press: ".into(),
                 "Enter".bold(),
-                " To confirm ".into(),
+                " To confirm, ".into(),
                 "Esc".bold(),
                 " To go back to normal mode ".into(),
             ],
@@ -49,9 +48,21 @@ pub fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
     let text = Text::from(Line::from(msg)).patch_style(style);
     f.render_widget(text, chunks[0]);
 
-    let input = Paragraph::new(app.key_input.as_str()).style(match app.current_screen {
-        CurrentScreen::Editing => Style::default(),
-        CurrentScreen::Normal => Style::default().add_modifier(Modifier::DIM),
-    });
+    let input = Paragraph::new(app.key_input.as_str())
+        .style(match app.current_screen {
+            CurrentScreen::Editing => Style::default(),
+            CurrentScreen::Normal => Style::default().add_modifier(Modifier::DIM),
+        })
+        .block(Block::default().borders(Borders::all()).title("New task"));
     f.render_widget(input, chunks[1]);
+
+    match app.current_screen {
+        CurrentScreen::Normal => {}
+        CurrentScreen::Editing => {
+            f.set_cursor(
+                chunks[1].x + app.key_input.len() as u16 + 1,
+                chunks[1].y + 1,
+            );
+        }
+    }
 }

@@ -1,8 +1,8 @@
 // Crossterm backend imports
-use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind, ModifierKeyCode};
+use crossterm::event::{self, Event, KeyCode};
 
 // Ratatui imports
-use ratatui::{DefaultTerminal, Frame};
+use ratatui::DefaultTerminal;
 
 use crate::todo::Todo;
 
@@ -22,17 +22,18 @@ pub enum CurrentScreen {
 
 impl App {
     pub fn new() -> App {
+        let todos = Todo::new().expect("Todo initialization failed");
         App {
             key_input: String::new(),
             value_input: false,
             current_screen: CurrentScreen::Normal,
-            todos: Todo,
+            todos,
         }
     }
 
-    pub fn run(&mut self, mut terminal: DefaultTerminal) -> std::io::Result<()> {
+    pub fn run(&mut self, mut terminal: DefaultTerminal) -> color_eyre::Result<()> {
         loop {
-            terminal.draw(|frame| ui(frame, &App));
+            terminal.draw(|frame| ui(frame, &self))?;
             if let Event::Key(key) = event::read()? {
                 match self.current_screen {
                     CurrentScreen::Normal => match key.code {
@@ -69,11 +70,13 @@ impl App {
                                 });
                             }
                         }
+
+                        _ => {}
                     },
 
                     CurrentScreen::Editing => match key.code {
                         KeyCode::Enter => {
-                            self.todos.add_task(&self);
+                            self.todos.add_task(&self.key_input)?;
                             self.current_screen = CurrentScreen::Normal
                         }
                         KeyCode::Char(c) => {

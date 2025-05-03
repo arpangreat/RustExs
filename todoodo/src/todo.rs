@@ -1,7 +1,5 @@
 use rusqlite::Connection;
 
-use crate::app::App;
-
 pub struct Todo {
     pub conn: Connection,
     pub tasks: Vec<TodoItems>,
@@ -36,17 +34,48 @@ impl Todo {
         })
     }
 
-    pub fn add_task(&mut self, app: &App) -> std::io::Result<()> {
+    pub fn refresh_task(&mut self) -> std::io::Result<()> {
+        let mut stmt = self
+            .conn
+            .prepare("SELECT id, description, completed FROM Todo")
+            .expect("Error when evaluating the query");
+
+        let tasks = stmt
+            .query_map([], |row| {
+                Ok(TodoItems {
+                    id: row.get::<_, i32>(0).expect("Error when getting id") as u16,
+                    description: row
+                        .get::<_, String>(1)
+                        .expect("Error when getting description"),
+                    completed: row
+                        .get::<_, bool>(2)
+                        .expect("Error when getting completed status"),
+                })
+            })
+            .expect("Error while getting the Todos");
+
+        self.tasks.clear();
+
+        for task in tasks {
+            self.tasks
+                .push(task.expect("Pushing tasks in TodoItems failed"));
+        }
+        Ok(())
+    }
+
+    pub fn add_task(&mut self, key: &str) -> std::io::Result<()> {
         self.conn
             .execute(
                 "
             INSERT INTO Todo (description) VALUES (?1)
             ",
-                [app.key_input.clone()],
+                [key],
             )
             .expect("Error on adding the task in database");
 
         println!("task added");
+
+        self.refresh_task()?;
 
         Ok(())
     }
@@ -72,31 +101,13 @@ impl Todo {
     }
 
     pub fn list(&mut self) -> std::io::Result<()> {
-        let mut stmt = self
-            .conn
-            .prepare("SELECT id, description, completed FROM Todo")
-            .expect("Error when evaluating the query");
+        self.refresh_task()?;
 
-        let tasks = stmt
-            .query_map([], |row| {
-                Ok((
-                    row.get::<_, i32>(0).expect("Error when getting id"),
-                    row.get::<_, String>(1)
-                        .expect("Error when getting description"),
-                    row.get::<_, bool>(2)
-                        .expect("Error when getting completed status"),
-                ))
-            })
-            .expect("Error while getting the Todos");
-
-        for task in tasks {
-            let (id, description, completed) =
-                task.expect("Error while getting the value of Todos");
-
+        for task in &self.tasks {
             println!("Todo: ");
-            println!("id: {:?}", id);
-            println!("description: {:?}", description);
-            println!("completed: {:?}", completed);
+            println!("id: {:?}", task.id);
+            println!("description: {:?}", task.description);
+            println!("completed: {:?}", task.completed);
         }
 
         Ok(())

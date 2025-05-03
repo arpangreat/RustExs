@@ -1,64 +1,71 @@
-use std::error::Error;
-use std::io;
-use std::io::Write;
+use color_eyre::Result;
+use todoodo::{app::App, todo::Todo};
 
-use crossterm::execute;
-use ratatui::backend::Backend;
-use ratatui::crossterm::event::{self, EnableMouseCapture, Event, KeyCode};
-use rusqlite::types::Value;
-use todoodo::app::{App, CurrentScreen};
-use todoodo::todo::Todo;
+fn main() -> Result<()> {
+    // let mut todoapp = Todo::new()?;
 
-use color_eyre;
+    // let args: Vec<String> = std::env::args().collect();
 
-fn main() -> std::io::Result<(), Box<dyn Error>> {
-    let mut todoapp = Todo::new()?;
+    // if args.len() < 2 {
+    //     println!("Invalid run");
+    // }
 
-    let args: Vec<String> = std::env::args().collect();
+    // let action = &args[1];
 
-    if args.len() < 2 {
-        println!("Invalid run");
-    }
+    // match action.as_str() {
+    //     "add" => {
+    //         print!("Add a description for the Todo: ");
+    //         // std::io::stdout().flush().unwrap();
 
-    let action = &args[1];
+    //         let mut desc = String::new();
 
-    match action.as_str() {
-        "add" => {
-            print!("Add a description for the Todo: ");
-            std::io::stdout().flush().unwrap();
+    //         std::io::stdin()
+    //             .read_line(&mut desc)
+    //             .expect("Please write down your Todo description");
 
-            let mut desc = String::new();
+    //         let desc = desc.trim().parse().expect("yo");
 
-            std::io::stdin()
-                .read_line(&mut desc)
-                .expect("Please write down your Todo description");
+    //         {
+    //             let this = &mut todoapp;
+    //             this.conn
+    //                 .execute(
+    //                     "
+    //         INSERT INTO Todo (description) VALUES (?1)
+    //         ",
+    //                     [desc.key_input.clone()],
+    //                 )
+    //                 .expect("Error on adding the task in database");
 
-            let desc = desc.trim().parse().expect("yo");
+    //             println!("task added");
 
-            todoapp.add_task(desc)?;
-        }
-        "check" => {
-            print!("Which task do you wanna checked? ");
-            std::io::stdout().flush().unwrap();
+    //             Ok(())
+    //         }?;
+    //     }
+    //     "check" => {
+    //         print!("Which task do you wanna checked? ");
+    //         // std::io::stdout().flush().unwrap();
 
-            let mut num = String::new();
+    //         let mut num = String::new();
 
-            std::io::stdin()
-                .read_line(&mut num)
-                .expect("Please type a valid number");
+    //         std::io::stdin()
+    //             .read_line(&mut num)
+    //             .expect("Please type a valid number");
 
-            let num: usize = num.trim().parse().expect("Please type a number");
+    //         let num: usize = num.trim().parse().expect("Please type a number");
 
-            todoapp.check_task(num)?;
-        }
-        "list" => {
-            println!("Todo: ");
-            todoapp.list()?;
-        }
-        _ => println!("Tell us a valid command. Available actions are add, check, list"),
-    }
+    //         todoapp.check_task(num)?;
+    //     }
+    //     "list" => {
+    //         println!("Todo: ");
+    //         todoapp.list()?;
+    //     }
+    //     _ => println!("Tell us a valid command. Available actions are add, check, list"),
+    // }
 
     color_eyre::install()?;
+
+    let mut todo = Todo::new()?;
+    todo.list()?;
 
     let terminal = ratatui::init();
     let app_result = App::new().run(terminal);
