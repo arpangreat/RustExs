@@ -1,3 +1,4 @@
+#![feature(mixed_integer_ops_unsigned_sub)]
 use color_eyre::Result;
 use todoodo::{app::App, todo::Todo};
 

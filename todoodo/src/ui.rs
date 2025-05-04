@@ -4,13 +4,13 @@ use ratatui::{
     Frame,
     layout::{Constraint, Layout},
     style::{Color, Modifier, Style, Stylize},
-    text::{Line, Text},
-    widgets::{Block, Borders, Paragraph},
+    text::{Line, Span, Text},
+    widgets::{Block, Borders, List, ListItem, Paragraph},
 };
 
 use crate::app::{App, CurrentScreen};
 
-pub fn ui(f: &mut Frame, app: &App) {
+pub fn ui(f: &mut Frame, app: &mut App) {
     let chunks = Layout::default()
         .direction(ratatui::layout::Direction::Vertical)
         .margin(2)
@@ -29,7 +29,9 @@ pub fn ui(f: &mut Frame, app: &App) {
                 "e".bold(),
                 " to add or delete a Todo, ".into(),
                 "q".bold(),
-                " to quit ".into(),
+                " to quit, ".into(),
+                "j/k".bold(),
+                " to scroll and select todo ".into(),
             ],
             Style::default().fg(Color::Red),
         ),
@@ -65,4 +67,27 @@ pub fn ui(f: &mut Frame, app: &App) {
             );
         }
     }
+
+    let items: Vec<ListItem> = app
+        .todos
+        .tasks
+        .iter()
+        .map(|task| {
+            ListItem::new(Line::from(vec![
+                Span::styled(format!("ID: {:?} | ", task.id), Style::default()),
+                Span::styled(
+                    format!("Description: {:?} | ", task.description),
+                    Style::default(),
+                ),
+                Span::styled(format!("Completed: {:?}", task.completed), Style::default()),
+            ]))
+            .style(Style::default().fg(Color::White))
+        })
+        .collect();
+
+    let list = List::new(items)
+        .block(Block::default().title("Tasks").borders(Borders::all()))
+        .highlight_style(Style::default().fg(Color::Yellow));
+
+    f.render_stateful_widget(list, chunks[2], &mut app.list_state);
 }

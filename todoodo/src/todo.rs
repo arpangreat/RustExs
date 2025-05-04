@@ -7,9 +7,9 @@ pub struct Todo {
 }
 
 pub struct TodoItems {
-    id: u16,
-    description: String,
-    completed: bool,
+    pub id: u16,
+    pub description: String,
+    pub completed: bool,
 }
 
 impl Todo {
