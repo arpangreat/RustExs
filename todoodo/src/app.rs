@@ -77,7 +77,7 @@ impl App {
                         }
 
                         KeyCode::Char(' ') => {
-                            if let Some(selected) = self.todos.selected_tasks {
+                            if let Some(selected) = self.list_state.selected() {
                                 let next = selected.saturating_sub(1);
                                 self.todos.selected_tasks = Some(next);
 
