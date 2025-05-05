@@ -76,6 +76,16 @@ impl App {
                             }
                         }
 
+                        KeyCode::Char(' ') => {
+                            if let Some(selected) = self.todos.selected_tasks {
+                                let next = selected.saturating_sub(1);
+                                self.todos.selected_tasks = Some(next);
+                            } else {
+                                self.todos.selected_tasks = Some(0)
+                            }
+                            self.todos.check_task(self.todos.selected_tasks)?;
+                        }
+
                         _ => {}
                     },
 

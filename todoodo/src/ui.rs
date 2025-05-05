@@ -68,18 +68,25 @@ pub fn ui(f: &mut Frame, app: &mut App) {
         }
     }
 
+    // if let task_status = if app.todos.tasks.compl
+
     let items: Vec<ListItem> = app
         .todos
         .tasks
         .iter()
         .map(|task| {
+            let status: Span = if task.completed {
+                Span::styled(format!("[✅]"), Style::default().fg(Color::Green).bold())
+            } else {
+                Span::styled(format!("[❌]"), Style::default().fg(Color::Red).bold())
+            };
             ListItem::new(Line::from(vec![
-                Span::styled(format!("ID: {:?} | ", task.id), Style::default()),
+                status,
+                Span::styled(format!(" {}. ", task.id), Style::default()),
                 Span::styled(
-                    format!("Description: {:?} | ", task.description),
-                    Style::default(),
+                    format!("{}", task.description),
+                    Style::default().fg(Color::Green).italic(),
                 ),
-                Span::styled(format!("Completed: {:?}", task.completed), Style::default()),
             ]))
             .style(Style::default().fg(Color::White))
         })
@@ -90,4 +97,12 @@ pub fn ui(f: &mut Frame, app: &mut App) {
         .highlight_style(Style::default().fg(Color::Yellow));
 
     f.render_stateful_widget(list, chunks[2], &mut app.list_state);
+
+    let status = format!(
+        "Total: {} | Completed: {}",
+        app.todos.tasks.len(),
+        app.todos.tasks.iter().filter(|t| t.completed).count()
+    );
+    let status_bar = Paragraph::new(status).style(Style::default().fg(Color::White));
+    f.render_widget(status_bar, chunks[3]);
 }
