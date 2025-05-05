@@ -80,10 +80,13 @@ impl App {
                             if let Some(selected) = self.todos.selected_tasks {
                                 let next = selected.saturating_sub(1);
                                 self.todos.selected_tasks = Some(next);
+
+                                if let Some(task) = self.todos.tasks.get(selected) {
+                                    self.todos.check_task(Some(task.id.into()))?;
+                                }
                             } else {
                                 self.todos.selected_tasks = Some(0)
                             }
-                            self.todos.check_task(self.todos.selected_tasks)?;
                         }
 
                         _ => {}
