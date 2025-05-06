@@ -89,6 +89,26 @@ impl App {
                             }
                         }
 
+                        KeyCode::Char('d') => {
+                            if let Some(selected) = self.list_state.selected() {
+                                let next = selected.saturating_sub(1);
+                                self.todos.selected_tasks = Some(next);
+
+                                if let Some(task) = self.todos.tasks.get(selected) {
+                                    self.todos.delete_task(task.id.into(), false)?;
+                                    let new_len = self.todos.tasks.len();
+                                    if new_len == 0 {
+                                        self.list_state.select(None);
+                                    } else {
+                                        let new_selected = selected.min(new_len - 1);
+                                        self.list_state.select(Some(new_selected));
+                                    }
+                                }
+                            } else {
+                                self.todos.selected_tasks = Some(0)
+                            }
+                        }
+
                         _ => {}
                     },
 

@@ -1,4 +1,4 @@
-use rusqlite::{Connection, fallible_streaming_iterator::FallibleStreamingIterator};
+use rusqlite::Connection;
 
 pub struct Todo {
     pub conn: Connection,
@@ -88,6 +88,7 @@ impl Todo {
                 return Ok(());
             }
         };
+
         let completed = {
             let mut stmt = self
                 .conn
@@ -121,15 +122,21 @@ impl Todo {
         Ok(())
     }
 
-    pub fn list(&mut self) -> std::io::Result<()> {
-        self.refresh_task()?;
+    pub fn delete_task(&mut self, id: usize, verbose: bool) -> std::io::Result<()> {
+        let affected = self
+            .conn
+            .execute("DELETE FROM TODO WHERE id = ?1", [id])
+            .expect("Deleting task from todo failed");
 
-        for task in &self.tasks {
-            println!("Todo: ");
-            println!("id: {:?}", task.id);
-            println!("description: {:?}", task.description);
-            println!("completed: {:?}", task.completed);
+        if verbose {
+            if affected == 0 {
+                println!("Deleted task of id: {}", id);
+            } else {
+                println!("No task found");
+            }
         }
+
+        self.refresh_task()?;
 
         Ok(())
     }
