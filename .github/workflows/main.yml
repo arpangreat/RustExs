@@ -23,6 +23,6 @@ jobs:
           mustBeGreen: true
           combineBranchName: "combined-prs"
           ignoreLabel: "nocombine"
-          baseBranch: "main"
+          baseBranch: "master"
           openPR: true
           allowSkipped: false
