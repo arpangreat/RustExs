@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo" # or "pip", "cargo", etc.
+    directory: "/"           # Location of the package manifest
+    schedule:
+      interval: "monthly"      # Options: "daily", "weekly", "monthly"
+    open-pull-requests-limit: 40
+    allow:
+      - dependency-type: "direct"  # Optional
+    ignore: []
+    commit-message:
+      prefix: "fix"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "dependencies"
+    rebase-strategy: "auto"
+    # Enable security updates
+    security-updates: true
+
