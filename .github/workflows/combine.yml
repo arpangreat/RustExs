@@ -6,6 +6,8 @@ on:
         description: 'Comma separate string of PRs to combine'
         required: false
         type: string
+  workflow_dispatch:
+
 
 jobs:
   combine-prs:
