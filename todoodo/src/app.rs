@@ -137,3 +137,9 @@ impl App {
         Ok(())
     }
 }
+
+impl Default for App {
+    fn default() -> Self {
+        Self::new()
+    }
+}

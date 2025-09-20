@@ -82,15 +82,15 @@ pub fn ui(f: &mut Frame, app: &mut App) {
         .iter()
         .map(|task| {
             let status: Span = if task.completed {
-                Span::styled(format!("[✅]"), Style::default().fg(Color::Green).bold())
+                Span::styled("[✅]".to_string(), Style::default().fg(Color::Green).bold())
             } else {
-                Span::styled(format!("[❌]"), Style::default().fg(Color::Red).bold())
+                Span::styled("[❌]".to_string(), Style::default().fg(Color::Red).bold())
             };
             ListItem::new(Line::from(vec![
                 status,
                 Span::styled(format!(" {}. ", task.id), Style::default()),
                 Span::styled(
-                    format!("{}", task.description),
+                    task.description.to_string(),
                     Style::default().fg(Color::Green).italic(),
                 ),
             ]))
