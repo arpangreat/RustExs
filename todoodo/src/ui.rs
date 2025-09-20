@@ -2,7 +2,7 @@ use std::vec;
 
 use ratatui::{
     Frame,
-    layout::{Constraint, Layout},
+    layout::{Constraint, Layout, Position},
     style::{Color, Modifier, Style, Stylize},
     text::{Line, Span, Text},
     widgets::{Block, Borders, List, ListItem, Paragraph},
@@ -65,10 +65,12 @@ pub fn ui(f: &mut Frame, app: &mut App) {
     match app.current_screen {
         CurrentScreen::Normal => {}
         CurrentScreen::Editing => {
-            f.set_cursor(
-                chunks[1].x + app.key_input.len() as u16 + 1,
-                chunks[1].y + 1,
-            );
+            {
+                let this = &mut *f;
+                let x = chunks[1].x + app.key_input.len() as u16 + 1;
+                let y = chunks[1].y + 1;
+                this.set_cursor_position(Position { x, y });
+            };
         }
     }
 
