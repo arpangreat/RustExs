@@ -1,4 +1,0 @@
-make money	false
-build	true
-make rust app	true
-make a gf	true
