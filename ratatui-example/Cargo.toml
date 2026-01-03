@@ -1,0 +1,17 @@
+[package]
+name = "ratatui-example"
+version = "0.1.0"
+edition = "2024"
+
+# [features]
+# default = ["crossterm"]
+# crossterm = ["ratatui/crossterm", "dep:crossterm"]
+# termion = ["ratatui/termion", "dep:termion"]
+# termwiz = ["ratatui/termwiz", "dep:termwiz"]
+
+[dependencies]
+argh = "0.1.13"
+clap = { version = "4.5.37", features = ["derive"] }
+crossterm = "0.29.0"
+rand = "0.9.1"
+ratatui = "0.29.0"
